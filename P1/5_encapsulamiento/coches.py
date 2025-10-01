@@ -49,12 +49,3 @@ class Coches:
         self.__velocidad-=fre
         return self.__velocidad
     
-coche1=Coches("VW", "Blanco", "2022", 220, 150, 5) 
-coche2=Coches("Nissan", "Azul", "2020", 180, 150, 6)
-coche3=Coches("Honda", "", "", 0, 0, 0) 
-print(f"El {coche1.getMarca()} {coche1.getColor()} aceleró de {coche1.getVelocidad()} a {coche1.acelerar(100)}!")
-print(f"El {coche2.getMarca()} {coche2.getColor()} frenó de {coche2.getVelocidad()} a {coche2.frenar(150)}!")
-
-print(f"\tDatos del vehículo: \nMarca: {coche1.getMarca()} \nColor: {coche1.getColor()} \nModelo: {coche1.getModelo()} \nVelocidad: {coche1.getVelocidad()} \nCaballaje: {coche1.getCaballaje()} \nPlaza: {coche1.getPlazas()}")
-print(f"\tDatos del vehículo: \nMarca: {coche2.getMarca()} \nColor: {coche2.getColor()} \nModelo: {coche2.getModelo()} \nVelocidad: {coche2.getVelocidad()} \nCaballaje: {coche2.getCaballaje()} \nPlaza: {coche2.getPlazas()}")
-print(f"\tDatos del vehículo: \nMarca: {coche3.getMarca()} \nColor: {coche3.getColor()} \nModelo: {coche3.getModelo()} \nVelocidad: {coche3.getVelocidad()} \nCaballaje: {coche3.getCaballaje()} \nPlaza: {coche3.getPlazas()}")
