@@ -2,7 +2,13 @@
 from coches import *
 import os
 
+def BorrarPantalla():
+    os.system("cls")
+def EsperarTecla():
+    input(f"\n\t... Oprima una tecla para continuar ...")
+
 def datos_autos(tipo):
+    BorrarPantalla()
     print(f"\n\t ...Ingresar los datos del Vehiculo de tipo: {tipo}")
     marca=input("Marca: ").upper()
     color=input("Color: ").upper()
@@ -40,24 +46,31 @@ def camiones():
     imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
     print(f"#Ejes: {coche.eje}\n Capacidad de carga: {coche.capacidadCarga}")
 
+def main():
+    opcion=True
+    while opcion:
+        opcion=input("\n\t\t ::: Menu Principal ::.\n\t1.- Autos\n\t2.-Camionetas\n\t3.-Camiones\n\t4.-Salir\n\tElige un opción: ").lower().strip()
+        match opcion:
+            case "1":
+                BorrarPantalla()
+                autos()
+                EsperarTecla()
+            case "2":
+                BorrarPantalla()
+                camionetas()
+                EsperarTecla()  
+            case "3":
+                BorrarPantalla()
+                camiones()
+                EsperarTecla()
+            case "4":
+                BorrarPantalla()
+                input("\n\t\tSalir del Sistema")
+                opcion=False   
+            case _:
+                BorrarPantalla()
+                input("\n\tOpcion invalida ... vuelva a intertarlo ... ")      
 
-opcion=True
-while opcion:
-    os.system("clear")
-    opcion=input("\n\t\t ::: Menu Principal ::.\n\t1.- Autos\n\t2.-Camionetas\n\t3.-Camiones\n\t4.-Salir\n\tElige un opción: ").lower().strip()
-    match opcion:
-        case "1":
-            autos()
-            input("Oprima tecla para continuar")
-        case "2":
-            camionetas()
-            input("Oprima tecla para continuar")  
-        case "3":
-            camiones()
-            input("Oprima tecla para continuar")
-        case "4":
-            input("Salir del Sistema")
-            opcion=False   
-        case _:
-            input("Opcion invalidad ... vuelva a intertarlo ... ")      
-
+if __name__=="__main__":
+    BorrarPantalla()
+    main()
