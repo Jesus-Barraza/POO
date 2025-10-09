@@ -2,6 +2,12 @@
 from model import coches,cochesBD
 import os
 
+def resultados(respuesta):
+    if respuesta:
+        print("Registro insertado correctamente")
+    else:
+        print("No fue posible insertar el registro, intenta lo nuevamente ...")
+
 def borrarPantalla():
    os.system("clear") 
 
@@ -29,10 +35,7 @@ def autos():
     #Agregar en la BD
     auto=cochesBD.Autos(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
     respuesta=auto.insertar()
-    if respuesta:
-        print("Registro insertado correctamente")
-    else:
-        print("No fue posible insertar el registro, intenta lo nuevamente ...")
+    resultados(respuesta)
             
 def camionetas():
     marca,color,modelo,velocidad,potencia,plazas=datos_autos("Camioneta")
@@ -41,10 +44,13 @@ def camionetas():
     if cerrada=="SI":
         cerrada=True
     else:
-        cerrada=False    
-    coche=coches.Camionetas(marca,color,modelo,velocidad,potencia,plazas,traccion,cerrada)
+        cerrada=False
+    coche=coches.Camionetas(marca,color,modelo,velocidad,potencia,plazas,traccion,cerrada)    
     imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
-    print(f"traccion: {coche.traccion}\n cerrada: {coche.cerrada}")
+    print(f"traccion: {coche.traccion}\n Cerrada: {coche.cerrada}")
+    #Acceso a la BD
+    respuesta=cochesBD.Camionetas.insertar(marca,color,modelo,velocidad,potencia,plazas,traccion,cerrada)
+    resultados(respuesta)
 
 def camiones():
     marca,color,modelo,velocidad,potencia,plazas=datos_autos("Camiones")
@@ -53,6 +59,10 @@ def camiones():
     coche=coches.Camiones(marca,color,modelo,velocidad,potencia,plazas,eje,capacidadCarga)
     imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
     print(f"#Ejes: {coche.eje}\n Capacidad de carga: {coche.capacidadCarga}")
+    #Acceso a la BD
+    respuesta=cochesBD.Camiones.insertar(marca,color,modelo,velocidad,potencia,plazas,eje,capacidadCarga)
+    resultados(respuesta)
+
 
 def main():
    opcion=True
