@@ -2,35 +2,24 @@
 from conexionDB import *
 
 class Estudiante():
-    def __init__(self, nombre, nota):
-        self._nombre=nombre
-        self._nota=nota
+#    def __init__(self, nombre, nota):
+#        self._nombre=nombre
+#        self._nota=nota
 
-    @property
-    def nombre(self):
-        return self._nombre
-    @nombre.setter
-    def nombre(self,nom):
-        self._nombre=nom
+#    @property
+#    def nombre(self):
+#        return self._nombre
+#    @nombre.setter
+#    def nombre(self,nom):
+#        self._nombre=nom
 
-    @property
-    def nota(self):
-        return self._nota
-    @nota.setter
-    def nota(self,note):
-        self._nota=note
+#    @property
+#    def nota(self):
+#        return self._nota
+#    @nota.setter
+#    def nota(self,note):
+#        self._nota=note
 
-    #def evaluacion(self):
-    #    if self._nota>=7.0 and self._nota<=10.0:
-    #        return "APROBATORIA"
-    #    elif self._nota >=0.0 and self._nota<7.0:
-    #        return "REPROBATORIA"
-    #    else:
-    #        return "INVÁLIDA"
-    #    
-    #def impresion(self):
-    #    resultado=self.evaluacion()
-    #    print(f"La calificación {self._nota} de {self._nombre} es {resultado}")
 
     @staticmethod
     def evaluacion(nota):

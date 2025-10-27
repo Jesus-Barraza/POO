@@ -1,62 +1,82 @@
 import conexionDB
-import funciones
 from model import estudiante
 
-def menu():
-    ini=True
-    while ini:
-        funciones.borrarPantalla()
-        print("\n\t Resultados de la calificación")
-        ini=input("\n1-Registrar Alumno \n2-Mostrar lista de Notas \n3-Actualizar alumno \n4-Eliminar alumno \n5-Ver nota\n6-Salir (1-6): ").strip()
-        if ini=="1":
-            funciones.borrarPantalla()
-            persona=estudiante.Estudiante(input("Ingrese el nombre del alumno: "), float(input("Ingrese la calificación: ")))
-            res=persona.insertar(persona.nombre, persona.nota)
-            if res:
-                print("Se ha insertado el alumno con éxito")
-            else:
-                print("Ocurrió un error, inténtelo de nuevo")
-            funciones.pulsarTecla()
-        elif ini=="2":
-            funciones.borrarPantalla()
-            estudiante.Estudiante.mostrar()
-            funciones.pulsarTecla()
-        elif ini=="3":
-            funciones.borrarPantalla()
-            estudiante.Estudiante.mostrar()
-            id=int(input("Ingrese la ID del alumno a actualizar: "))
-            alumno=estudiante.Estudiante(input("Ingrese el nombre actualizado: "), float(input("Ingrese la nueva calificación del alumno: ")))
-            res=alumno.actualizar(alumno.nombre, alumno.nota, id)
-            if res:
-                print("Se actualizó el alumno con éxito")
-            else:
-                print("Ocurrió un error, inténtelo de nuevo")
-            funciones.pulsarTecla()
-        elif ini=="4":
-            funciones.borrarPantalla()
-            estudiante.Estudiante.mostrar()
-            id=int(input("Inserte el ID del alumno a eliminar: "))
-            res=estudiante.Estudiante.eliminar(id)
-            if res:
-                print("Se eliminó el alumno con éxito")
-            else:
-                print("Ocurrió un error, inténtelo más tarde")
-            funciones.pulsarTecla()
-        elif ini=="5":
-            funciones.borrarPantalla()
-            estudiante.Estudiante.mostrar()
-            id=int(input("Ingrese la ID del estudiante: "))
-            estudiante.Estudiante.impresion(id)
-            funciones.pulsarTecla()
-        elif ini=="6":
-            funciones.borrarPantalla()
-            print("Se ha finalizado la ejecución del programa")
-            ini=False
+class App():
+    def __init__(self):
+        self.menu()
+
+    @staticmethod
+    def borrarPantalla():
+        import os
+        os.system("cls")
+
+    @staticmethod
+    def pulsarTecla():
+        input("Presione enter para continuar")
+
+    @staticmethod
+    def respuesta_sql(dato):
+        if dato:
+            print("Se realizó la acción con éxito")
         else:
-            print("La selección no es válida, inténtelo de nuevo")
-            funciones.pulsarTecla()
-            ini=True
+            print("Ocurrió un error, inténtelo de nuevo")
+
+    @staticmethod
+    def menu_opciones_estudiantes():
+        print("\n\t Resultados de la calificación")
+        opcion=input("\n1-Registrar Alumno \n2-Mostrar lista de Notas \n3-Actualizar alumno \n4-Eliminar alumno \n5-Ver nota\n6-Salir (1-6): ").strip()
+        return opcion
+    
+    def datos_estudiantes(self):
+        nombre=input("Ingrese el nombre del alumno:")
+        nota=input("Inserte la calificación: ")
+        return nombre, nota
+
+    def menu_estudiantes(self):
+        opc=True
+        while opc:
+            self.borrarPantalla()
+            opc=self.menu_opciones_estudiantes()
+            if opc=="1":
+                self.borrarPantalla()
+                dato=self.datos_estudiantes()
+                self.respuesta_sql(estudiante.Estudiante.insertar(dato[0],dato[1]))
+                self.pulsarTecla()
+            elif opc=="2":
+                self.borrarPantalla()
+                estudiante.Estudiante.mostrar()
+                self.pulsarTecla()
+            elif opc=="3":
+                self.borrarPantalla()
+                estudiante.Estudiante.mostrar()
+                id=int(input("Ingrese la ID del alumno a actualizar: "))
+                dato=self.datos_estudiantes()
+                self.respuesta_sql(estudiante.Estudiante.actualizar(dato[0],dato[1],id))
+                self.pulsarTecla()
+            elif opc=="4":
+                self.borrarPantalla()
+                estudiante.Estudiante.mostrar()
+                id=int(input("Inserte el ID del alumno a eliminar: "))
+                self.respuesta_sql(estudiante.Estudiante.eliminar(id))
+                self.pulsarTecla()
+            elif opc=="5":
+                self.borrarPantalla()
+                estudiante.Estudiante.mostrar()
+                id=int(input("Ingrese la ID del estudiante: "))
+                estudiante.Estudiante.impresion(id)
+                self.pulsarTecla()
+            elif opc=="6":
+                self.borrarPantalla()
+                print("Se ha finalizado la ejecución del programa")
+                opc=False
+            else:
+                print("La selección no es válida, inténtelo de nuevo")
+                self.pulsarTecla()
+                opc=True
+
+    def menu(self):
+        self.menu_estudiantes()
 
 if __name__ == "__main__":
     if conexionDB.connect()==True:
-        menu()
+        main=App()
