@@ -49,7 +49,7 @@ ventana=tk.mainloop()
 '''
 
 ventana=tk.Tk()
-ventana.geometry("600x800")
+ventana.geometry("800x600")
 ventana.title("Sistema \u270F")
 
 #Funcion
@@ -67,10 +67,15 @@ def borrar(cuadro1, cuadro2, funcion):
     cuadro1.delete(0, tk.END)
     cuadro2.delete(0, tk.END)
     color_defecto=ventana.cget("bg")
+#    funcion.destroy() #Puedes borrar todo dentro de lo dibujado con eso
     funcion.config(
         text="",
         bg=color_defecto
     )
+    cuadro2.focus()
+
+def salir():
+    ventana.quit() #Esta función te permite salir de un programa
 
 #titulo
 lbl_titulo=tk.Label(ventana, text="Bienvenido al sistema")
@@ -92,8 +97,10 @@ lbl_nombre.pack(anchor="nw", padx=10, pady=[30,10])
 
 txt_nombre=tk.Entry(ventana)
 txt_nombre.config(
-    width=50
+    width=50,
+#    state="readonly", #permite la inicialización de datos de normal
 )
+txt_nombre.focus() #Permite inicializar el foco en un cuadro de texto
 txt_nombre.pack(anchor="n")
 
 #ingreso de contraseña
@@ -109,20 +116,62 @@ txt_contra.config(
 )
 txt_contra.pack(anchor="n")
 
+'''
 #boton de ingreso
 btn_saludar=tk.Button(ventana, text="Ingresar", command=lambda:entrar(lbl_saludo, txt_nombre.get())) #lleva el sufijo btn
 btn_saludar.config(
     font=("arial",10),
     width=10
 )
-btn_saludar.pack(pady=15)
+btn_saludar.pack(pady=[15,10])
 
 btn_borrar=tk.Button(ventana, text="Borrar", command=lambda:borrar(txt_nombre,txt_contra,lbl_saludo))
 btn_borrar.config(
     font=("arial",10),
     width=10
 )
-btn_borrar.pack(pady=5)
+btn_borrar.pack(pady=10)
+
+#Salida
+btn_salir=tk.Button(ventana, text="Salir", command=lambda:salir())
+btn_salir.config(
+    font=("arial",10),
+    width=10
+)
+btn_salir.pack(pady=10)
+'''
+
+#Marco de los botones
+marco_botones=tk.Frame(ventana)
+marco_botones.config(
+    width=800,
+    height=50,
+)
+marco_botones.pack_propagate(False)
+marco_botones.pack(pady=25)
+
+#boton de ingreso
+btn_saludar=tk.Button(marco_botones, text="Ingresar", command=lambda:entrar(lbl_saludo, txt_nombre.get())) #lleva el sufijo btn
+btn_saludar.config(
+    font=("arial",10),
+    width=10
+)
+btn_saludar.grid(row=0, column=0, padx=5, pady=15) #Adaptando un marco, puedes tratarlo como tabla con esto
+
+btn_borrar=tk.Button(marco_botones, text="Borrar", command=lambda:borrar(txt_nombre,txt_contra,lbl_saludo))
+btn_borrar.config(
+    font=("arial",10),
+    width=10
+)
+btn_borrar.grid(row=0, column=1, padx=5, pady=15)
+
+#Salida
+btn_salir=tk.Button(marco_botones, text="Salir", command=lambda:salir())
+btn_salir.config(
+    font=("arial",10),
+    width=10
+)
+btn_salir.grid(row=0, column=2, padx=5, pady=15)
 
 #Texto de saludo
 lbl_saludo=tk.Label(ventana, text="")
