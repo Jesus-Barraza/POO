@@ -8,12 +8,13 @@ ventana.title("Scale \U0001F50D")
 #Variables dadas
 valor=tk.IntVar()
 
-#escalas
-scale=tk.Scale(ventana, )
-
 #Funciones
 def mostrarEstado(funcion,val):
     funcion.config(text=f"Valor seleccionado por el usuario: {val.get()}")
+
+#escalas
+scale=tk.Scale(ventana, showvalue=True, variable=valor, from_=0, to=100, orient="horizontal", length=300)
+scale.pack(pady=5)
 
 #boton
 btn_confirmacion=tk.Button(ventana, text="Confirmar", command=lambda:mostrarEstado(lbl_resultado,valor))
