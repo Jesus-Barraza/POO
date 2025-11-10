@@ -9,7 +9,7 @@ ventana.title("Imagenes \u23F0")
 def alerta1():
     nombreObtenido=cadena.get()
     etiqueta.config(text=f"{nombreObtenido}")
-    resultado=messagebox.showinfo(message=f"{nombreObtenido}",icon="INFFO")
+    resultado=messagebox.showinfo(message=f"{nombreObtenido}",icon="INFO")
 
 def alerta2():
     resultado=messagebox.askquestion(message="¿Quires continuar ejecutando la aplicación?",icon="question")
