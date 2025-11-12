@@ -11,35 +11,31 @@ import tkinter as tk
 from tkinter import messagebox
 
 #Controlador o controller
-def suma(num1, num2):
-    mensaje=f"la suma {num1} + {num2} es de {Calculadora.suma(num1, num2)}"
-    notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la suma (+)")
-
-def resta(num1, num2):
-    mensaje=f"la resta {num1} - {num2} es de {Calculadora.resta(num1, num2)}"
-    notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la resta (-)")
-
-def multiplicacion(num1, num2):
-    mensaje=f"la multiplicacion {num1} x {num2} es de {Calculadora.multiplicacion(num1, num2)}"
-    notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la multiplicacion (x)")
-
-def division(num1, num2):
+def operacion(n1, n2, ope):
     try:
-        mensaje=f"la division {num1} / {num2} es de {Calculadora.division(num1, num2)}"
-        notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la division (/)")
+        if ope=="suma":
+            sim="+" 
+            res=Calculadora.suma(n1, n2)
+        elif ope=="resta":
+            sim="-"
+            res=Calculadora.resta(n1, n2)
+        elif ope=="multiplica":
+            sim="x"
+            res=Calculadora.multiplicacion(n1, n2)
+        elif ope=="divide":
+            sim="/"
+            res=Calculadora.division (n1, n2)
+        elif ope=="potencia":
+            sim="^"
+            res=Calculadora.potenciacion(n1, n2)
+        elif ope=="raiz":
+            sim="√"
+            res=Calculadora.raiz(n1, n2)
     except ZeroDivisionError:
-        notificacion=messagebox.showwarning(title="División de 0", message="No se puede dividir un número entre 0", icon="warning")
-
-def potencia(num1, num2):
-    mensaje=f"la potencia {num1} ^ {num2} es de {Calculadora.potenciacion(num1, num2)}"
-    notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la potencia (^)")
-
-def raiz(num1, num2):
-    try:
-        mensaje=f"la raiz {num2} √ {num1} es de {Calculadora.raiz(num1, num2)}"
-        notificacion=messagebox.showinfo(message=mensaje, icon="info", title="Resultado de la raiz (√)")
-    except:
-        notificacion=messagebox.showwarning(title="Potencia al infinito", message="No se puede potenciar un número al infinito", icon="warning")
+        notificacion=messagebox.showerror(title="Dividir entre 0", icon="warning", message="No se puede dividir entre 0")
+    else:
+        mensaje=f"la {ope} {n1} {sim} {n2} es de {res}"
+        notificacion=messagebox.showinfo(title="Resultado", icon="info", message=mensaje)    
 
 #ventana
 ventana=tk.Tk()
@@ -51,15 +47,26 @@ ventana.resizable(False, False)
 n1=tk.IntVar()
 n2=tk.IntVar()
 
+#limitar las cajas de texto
+def limit(p):
+    if p.isdigit():
+        return True
+    elif p==".":
+        return True
+    else:
+        return False
+    
+verificacion= (ventana.register(limit), "%P")
+
 #cajas de texto
-txt_numero1=tk.Entry(ventana, textvariable=n1)
+txt_numero1=tk.Entry(ventana, textvariable=n1, validatecommand=verificacion, validate="key")
 txt_numero1.config(
     width=20,
     justify="right"
 )
 txt_numero1.pack(side="top", pady=[15,5])
 
-txt_numero2=tk.Entry(ventana, textvariable=n2)
+txt_numero2=tk.Entry(ventana, textvariable=n2, validatecommand=verificacion, validate="key")
 txt_numero2.config(
     width=20,
     justify="right"
@@ -75,37 +82,37 @@ frame_btn.config(
 frame_btn.pack(pady=5)
 
 #botones
-btn_suma=tk.Button(frame_btn, text="+", command=lambda:suma(n1.get(), n2.get()))
+btn_suma=tk.Button(frame_btn, text="+", command=lambda:operacion(n1.get(), n2.get(), "suma"))
 btn_suma.config(
     width=5
 )
 btn_suma.grid(row=0, column=0, padx=5, pady=5)
 
-btn_resta=tk.Button(frame_btn, text="-", command=lambda:resta(n1.get(), n2.get()))
+btn_resta=tk.Button(frame_btn, text="-", command=lambda:operacion(n1.get(), n2.get(), "resta"))
 btn_resta.config(
     width=5
 )
 btn_resta.grid(row=0, column=1, padx=5, pady=5)
 
-btn_multi=tk.Button(frame_btn, text="x", command=lambda:multiplicacion(n1.get(), n2.get()))
+btn_multi=tk.Button(frame_btn, text="x", command=lambda:operacion(n1.get(), n2.get(), "multiplica"))
 btn_multi.config(
     width=5
 )
 btn_multi.grid(row=1, column=0, padx=5, pady=5)
 
-btn_divi=tk.Button(frame_btn, text="/", command=lambda:division(n1.get(), n2.get()))
+btn_divi=tk.Button(frame_btn, text="/", command=lambda:operacion(n1.get(), n2.get(), "divide"))
 btn_divi.config(
     width=5
 )
 btn_divi.grid(row=1, column=1, padx=5, pady=5)
 
-btn_potencia=tk.Button(frame_btn, text="^", command=lambda:potencia(n1.get(), n2.get()))
+btn_potencia=tk.Button(frame_btn, text="^", command=lambda:operacion(n1.get(), n2.get(), "potencia"))
 btn_potencia.config(
     width=5
 )
 btn_potencia.grid(row=2, column=0, padx=5, pady=5)
 
-btn_raiz=tk.Button(frame_btn, text="√", command=lambda:raiz(n1.get(), n2.get()))
+btn_raiz=tk.Button(frame_btn, text="√", command=lambda:operacion(n1.get(), n2.get(), "raiz"))
 btn_raiz.config(
     width=5
 )
