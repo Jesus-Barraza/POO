@@ -6,6 +6,7 @@ class Operaciones():
         self._n2=n2
         self._sim=sim
         self._res=res
+        self.insertar()
 
     def insertar(self):    
         try:
