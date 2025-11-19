@@ -11,5 +11,7 @@ try:
     )
     if conexion.is_connected():
         cursor=conexion.cursor(buffered=True)
+        result=True
 except Error as e:
     error=messagebox.showerror(message=f"Ocurrió el error {e}, inténtelo más tarde", icon="error", title="Hubo un error al conectar a la base de datos")
+    result=False
