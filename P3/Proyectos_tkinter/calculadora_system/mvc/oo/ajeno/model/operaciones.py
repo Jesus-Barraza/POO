@@ -26,7 +26,7 @@ class Operaciones():
             "select * from operaciones"
           )
           return conexionDB.cursor.fetchall()
-        except:    
+        except:
           return []
 
     @staticmethod
