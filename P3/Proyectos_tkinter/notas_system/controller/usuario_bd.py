@@ -7,7 +7,7 @@ class UsuarioBD():
         try:
             cursor.execute(
                 "insert into usuarios values(null,%s,%s,%s,%s,%s)",
-                (nombre,apellidos,email,hashlib.sha256(password.encode()).hexdigest(),NOW())
+                (nombre,apellidos,email,hashlib.sha256(password.encode()).hexdigest(),"NOW()")
             )
             conexion.commit()
             return True
