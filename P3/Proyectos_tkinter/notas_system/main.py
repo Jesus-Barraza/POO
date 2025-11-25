@@ -7,11 +7,10 @@ from view.interfaz import *
 import tkinter as tk
 
 class App():
-   def __init__(self):
-      pass
+   def __init__(self, ventana):
+      Interfaz(ventana)
 
 if __name__ == "__main__":
    ventana=tk.Tk()
    app=App(ventana)
    ventana=tk.mainloop()
-
