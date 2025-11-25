@@ -1,16 +1,17 @@
 import mysql.connector
+from mysql.connector import Error
+from tkinter import messagebox
 
 try:
-    #Conectar con la BD en MySQL
     conexion=mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='bd_notas'
+        host="127.0.0.1",
+        user="root",
+        password="",
+        database="bd_notas"
     )
-    #Crear un objeto de tipo cursor que se pueda reutilizar nuevamente
-    cursor=conexion.cursor(buffered=True)
-    a=True
-except:
-    print(f"Ocurrio un error con el Sistema por favor verifique ...")    
-    a=False
+    if conexion.is_connected():
+        cursor=conexion.cursor(buffered=True)
+        result=True
+except Error as e:
+    error=messagebox.showerror(message=f"Ocurrió el error {e}, inténtelo más tarde", icon="error", title="Hubo un error al conectar a la base de datos")
+    result=False

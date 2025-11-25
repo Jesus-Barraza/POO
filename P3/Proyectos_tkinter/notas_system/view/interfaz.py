@@ -1,5 +1,5 @@
 import getpass
-from model import funciones
+from model.funciones import Usuarios
 import tkinter as tk
 from tkinter import messagebox
 
@@ -11,17 +11,27 @@ class Interfaz():
         self.menu_inicial(ventana)
 
     @staticmethod
+    def limit_mail(p):
+        allowed = "0123456789.abcdefghijklmnopqrstuvwxyz@_"
+        if all(ch in allowed for ch in p) and p.count("@") <= 1:
+            return True
+        else:
+            return False
+    
+    @staticmethod
+    def limite_correo(ventana):
+        end=(ventana.register(Interfaz.limit_mail), "%P")
+        return end
+
+
+    @staticmethod
     def borrarPantalla(ventana):
         for widget in ventana.winfo_children():
             widget.destroy()
     
     @staticmethod
     def esperarTecla():
-        espera=messagebox.askokcancel(title="Esperando...", message="Presiona ok para continuar")
-        if true:
-            return True
-        else:
-            return False
+        espera=messagebox.askok(title="Esperando...", message="Presiona ok para continuar")
     
     def menu_inicial(self, ventana):
         #Borrar ventana
@@ -32,13 +42,13 @@ class Interfaz():
         lbl_titulo.pack(anchor="n", pady=10)
 
         #Botones
-        btn_registro=tk.Button(ventana, text="Registro", command="")
+        btn_registro=tk.Button(ventana, text="Registro", command=lambda:self.menu_registro(ventana))
         btn_registro.config(
             width=12
         )
         btn_registro.pack(pady=15)
 
-        btn_login=tk.Button(ventana, text="Login", command="")
+        btn_login=tk.Button(ventana, text="Login", command=lambda:self.menu_iniciosesion(ventana))
         btn_login.config(
             width=12
         )
@@ -49,6 +59,105 @@ class Interfaz():
             width=12
         )
         btn_salir.pack(pady=15)
+
+    def menu_iniciosesion(self, ventana):
+        #borrar ventana
+        self.borrarPantalla(ventana)
+
+        #Validación del correo electrónico
+        validar=self.limite_correo(ventana)
+
+        #Variables
+        correo=tk.StringVar()
+        contra=tk.StringVar()
+
+        #titulo
+        lbl_title=tk.Label(ventana, text=".:: Inicio de sesión ::.")
+        lbl_title.pack(pady=15)
+
+        #Correo
+        lbl_correo=tk.Label(ventana, text="Ingrese su correo: ")
+        lbl_correo.pack(pady=[15,10])
+
+        txt_correo=tk.Entry(ventana, width=50, textvariable=correo, validate="key", validatecommand=validar)
+        txt_correo.pack(pady=10)
+
+        #Contraseña
+        lbl_contraseña=tk.Label(ventana, text="Ingrese su contraseña: ")
+        lbl_contraseña.pack(pady=[15,10])
+
+        txt_contraseña=tk.Entry(ventana, width=50, textvariable=contra, show="•")
+        txt_contraseña.pack(pady=[10,15])
+        
+        #botones
+        btn_entrar=tk.Button(ventana, text="Entrar", command=lambda:Usuarios.inicio_sesion(ventana, correo.get(), contra.get()))
+        btn_entrar.config(
+            width=12
+        )
+        btn_entrar.pack(pady=10)
+
+        btn_volver=tk.Button(ventana, text="Volver", command=lambda:self.menu_inicial(ventana))
+        btn_volver.config(
+            width=12
+        )
+        btn_volver.pack(pady=10)
+
+    def menu_registro(self, ventana):
+        #borrar ventana
+        self.borrarPantalla(ventana)
+
+        #Validación del correo electrónico
+        validar=self.limite_correo(ventana)
+
+        #Variables
+        nombre=tk.StringVar()
+        apelli=tk.StringVar()
+        correo=tk.StringVar()
+        contra=tk.StringVar()
+
+        #titulo
+        lbl_title=tk.Label(ventana, text=".:: Registro de usuario ::.")
+        lbl_title.pack(pady=15)
+
+        #Nombres
+        lbl_nombre=tk.Label(ventana, text="Ingrese sus nombres (Sin apellidos):")
+        lbl_nombre.pack(pady=[15,10])
+
+        txt_nombre=tk.Entry(ventana, width=50, textvariable=nombre)
+        txt_nombre.pack(pady=10)
+        #Apellidos
+        lbl_apellido=tk.Label(ventana, text="Ingrese sus apellidos: ")
+        lbl_apellido.pack(pady=[15,10])
+
+        txt_apellido=tk.Entry(ventana, width=50, textvariable=apelli)
+        txt_apellido.pack(pady=10)
+
+        #Correo
+        lbl_correo=tk.Label(ventana, text="Ingrese su correo: ")
+        lbl_correo.pack(pady=[15,10])
+
+        txt_correo=tk.Entry(ventana, width=50, textvariable=correo, validate="key", validatecommand=validar)
+        txt_correo.pack(pady=10)
+
+        #Contraseña
+        lbl_contraseña=tk.Label(ventana, text="Ingrese su contraseña: ")
+        lbl_contraseña.pack(pady=[15,10])
+
+        txt_contraseña=tk.Entry(ventana, width=50, textvariable=contra, show="•")
+        txt_contraseña.pack(pady=[10,15])
+        
+        #botones
+        btn_entrar=tk.Button(ventana, text="Entrar", command=lambda:Usuarios.registrar(ventana, nombre.get(), apelli.get(), correo.get(), contra.get()))
+        btn_entrar.config(
+            width=12
+        )
+        btn_entrar.pack(pady=10)
+
+        btn_volver=tk.Button(ventana, text="Volver", command=lambda:self.menu_inicial(ventana))
+        btn_volver.config(
+            width=12
+        )
+        btn_volver.pack(pady=10)
     
     def menu_notas(self,usuario_id,nombre,apellidos):
      while True:
