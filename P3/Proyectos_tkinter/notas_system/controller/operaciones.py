@@ -7,7 +7,7 @@ class Sesion():
         try:
             cursor.execute(
                 "insert into usuarios values(null,%s,%s,%s,%s,%s)",
-                (nombre,apellidos,email,hashlib.sha256(password.encode()).hexdigest(),"NOW()")
+                (nombre,apellidos,email,password,"NOW()")
             )
             conexion.commit()
             return True
@@ -17,9 +17,8 @@ class Sesion():
     @staticmethod
     def iniciar_sesion(email, contrasena):
         try:
-            contrasena=hashlib.sha256(contrasena.encode()).hexdigest()
             cursor.execute(
-                "select * from usuarios where email=%s and password=%s",
+                "select id, nombre, apellidos from usuarios where email=%s and password=%s",
                 (email,contrasena)
             )
             usuario=cursor.fetchone()
