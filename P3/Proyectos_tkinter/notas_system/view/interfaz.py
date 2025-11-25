@@ -1,67 +1,55 @@
 import getpass
-from model import usuario
-from model import nota
+from model import funciones
+import tkinter as tk
+from tkinter import messagebox
 
 class Interfaz():
     def __init__(self, ventana):
-        self.menu_principal(ventana)
+        ventana.geometry("800x600")
+        ventana.title("Gestión de notas ")
+        ventana.resizable(False, False)
+        self.menu_inicial(ventana)
 
     @staticmethod
-    def borrarPantalla():
-      import os  
-      os.system("cls")
-
+    def borrarPantalla(ventana):
+        for widget in ventana.winfo_children():
+            widget.destroy()
+    
     @staticmethod
     def esperarTecla():
-      print("\n \t \tOprima cualquier tecla para continuar ...")
-      input()
-    
-    def menu_principal(self, ventana):
-     while True:    
-        Interfaz.borrarPantalla()
-        print("""
-      .::  Menu Principal ::. 
-          1.- Registro
-          2.- Login
-          3.- Salir 
-          """)
-        opcion = input("\t Elige una opción: ").upper()
-
-        if opcion == '1' or opcion=="REGISTRO":
-            Interfaz.borrarPantalla()
-            print("\n \t ..:: Registro en el Sistema ::..")
-            nombre=input("\t ¿Cual es tu nombre?: ")
-            apellidos=input("\t ¿Cuales son tus apellidos?: ")
-            email=input("\t Ingresa tu email: ")
-            password=getpass.getpass("\t Ingresa tu contraseña: ")
-            #Agregar codigo
-            resultado=usuario.Usuario.registrar(nombre,apellidos,email,password)
-            if resultado:
-                print(f"\n\t {nombre} {apellidos}, se registro correctamente, con el email: {email}")
-            else:
-                print(f"\n\t ** Por favor intentelo de nuevo, no fue posible insertar el registro ** ...")  
-            Interfaz.esperarTecla()      
-        elif opcion == '2' or opcion=="LOGIN":
-            Interfaz.borrarPantalla()
-            print("\n \t ..:: Inicio de Sesión ::.. ")     
-            email=input("\t Ingresa tu E-mail: ")
-            password=getpass.getpass("\t Ingresa tu Contraseña: ")
-            #Agregar codigo 
-            registro=usuario.Usuario.iniciar_sesion(email,password)
-            if registro:
-                self.menu_notas(registro[0],registro[1],registro[2])
-            else:
-                print(f"\n\t Email y/o contraseña incorrectas... vuelva a intentarlo ...")
-                Interfaz.esperarTecla()    
-        elif opcion == '3' or opcion=="SALIR":
-            print("\n\t.. ¡Gracias Bye! ...")
-            #opc=False
-            break
-            #exit()
+        espera=messagebox.askokcancel(title="Esperando...", message="Presiona ok para continuar")
+        if true:
+            return True
         else:
-            print("\n \t \t Opción no válida. Intenta de nuevo.")
-            Interfaz.esperarTecla()
+            return False
+    
+    def menu_inicial(self, ventana):
+        #Borrar ventana
+        self.borrarPantalla(ventana)
 
+        #Título
+        lbl_titulo=tk.Label(ventana, text=".:: Menu principal ::.")
+        lbl_titulo.pack(anchor="n", pady=10)
+
+        #Botones
+        btn_registro=tk.Button(ventana, text="Registro", command="")
+        btn_registro.config(
+            width=12
+        )
+        btn_registro.pack(pady=15)
+
+        btn_login=tk.Button(ventana, text="Login", command="")
+        btn_login.config(
+            width=12
+        )
+        btn_login.pack(pady=15)
+
+        btn_salir=tk.Button(ventana, text="Salir", command=lambda:ventana.quit())
+        btn_salir.config(
+            width=12
+        )
+        btn_salir.pack(pady=15)
+    
     def menu_notas(self,usuario_id,nombre,apellidos):
      while True:
         Interfaz.borrarPantalla()

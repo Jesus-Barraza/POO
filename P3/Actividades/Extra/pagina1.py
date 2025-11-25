@@ -22,4 +22,6 @@ class App():
         while opera!=7:
             try:
                 self.borrarPantalla()
-                print("\n\t\t..:: CALCULADORA BÁSICA :::. \n\t 1.- Suma \n\t 2.- Resta \n\t 3.- Multip
+                print("\n\t\t..:: CALCULADORA BÁSICA :::. \n\t 1.- Suma \n\t 2.- Resta \n\t 3.- Multip")
+            except:
+                pass
