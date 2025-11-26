@@ -1,4 +1,4 @@
-from conexionBD import *
+from model.conexionBD import *
 import hashlib
 
 class Sesion():
@@ -10,9 +10,13 @@ class Sesion():
                 (nombre,apellidos,email,password,"NOW()")
             )
             conexion.commit()
-            return True
+            usuario=Sesion.iniciar_sesion(email, password)
+            if usuario:
+               return usuario
+            else:
+               return None
         except:
-            return False    
+            return None  
 
     @staticmethod
     def iniciar_sesion(email, contrasena):
