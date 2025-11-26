@@ -218,7 +218,7 @@ class Interfaz():
 
         #Validar nota
         def validar_nota(id_usuario, titulo, desc):
-            vali=OpeNotas(id_usuario, titulo, desc)
+            vali=OpeNotas.crear_nota(id_usuario, titulo, desc)
             if vali:
                 self.menu_notas(ventana, id_usuario, nombre, apellidos)
 
@@ -317,7 +317,8 @@ class Interfaz():
 
         #Validar nota
         def validar_nota(id, titulo, desc):
-            if True:
+            vali=OpeNotas.modificar_nota(id, titulo, desc)
+            if vali:
                 self.menu_notas(ventana, id_usuario, nombre, apellidos)
 
         #Titulo
@@ -345,7 +346,7 @@ class Interfaz():
         txt_titulo.pack(pady=[10, 20])
 
         #Texto de la nota
-        lbl_texto=tk.Label(ventana, text="Nuevba descripción:")
+        lbl_texto=tk.Label(ventana, text="Nueva descripción:")
         lbl_texto.pack(pady=10)
 
         txt_texto=tk.Entry(ventana, textvariable=texto)
@@ -375,7 +376,8 @@ class Interfaz():
 
         #Validar nota
         def validar_nota(id):
-            if True:
+            vali=OpeNotas.eliminar_nota(id)
+            if vali:
                 self.menu_notas(ventana, id_usuario, nombre, apellidos)
 
         #Titulo
@@ -383,7 +385,7 @@ class Interfaz():
         lbl_title.pack(pady=[15, 25])
 
         #Id
-        lbl_id=tk.Label(ventana, text="ID de la nota a modificar:")
+        lbl_id=tk.Label(ventana, text="ID de la nota a eliminar:")
         lbl_id.pack(pady=10)
 
         txt_id=tk.Entry(ventana, textvariable=ide)

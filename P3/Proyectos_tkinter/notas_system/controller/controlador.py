@@ -29,19 +29,33 @@ class Usuarios():
             return None
         
 class OpeNotas():
-    def __init__(self, usuarioid, titulo, descripcion):
-        self.crear_nota(usuarioid, titulo, descripcion)
-        
+    @staticmethod
+    def alerta(notificacion):
+        if notificacion:
+            noti=messagebox.showinfo(title="Registro de notas", message="La operación se realizó con éxito")
+        else:
+            noti=messagebox.showerror(title="Registro de notas", message="Se ha producido un error, inténtelo más tarde")
+
+
     @staticmethod
     def crear_nota(usuarioid, titulo, descripcion):
         regi=Notas.crear(usuarioid, titulo, descripcion)
-        if regi:
-            noti=messagebox.showinfo(title="Registro de notas", message="Se agregó la nota con éxito", icon="info")
-        else:
-            noti=messagebox.showerror(title="Registro de notas", message="Se ha producido un error, inténtelo más tarde")
+        OpeNotas.alerta(regi)
         return regi
     
     @staticmethod
     def mostrar_nota(usuarioid):
         regi=Notas.mostrar(usuarioid)
+        return regi
+    
+    @staticmethod
+    def modificar_nota(id, titulo, descripcion):
+        regi=Notas.actualizar(id, titulo, descripcion)
+        OpeNotas.alerta(regi)
+        return regi
+    
+    @staticmethod
+    def eliminar_nota(id):
+        regi=Notas.eliminar(id)
+        OpeNotas.alerta(regi)
         return regi
