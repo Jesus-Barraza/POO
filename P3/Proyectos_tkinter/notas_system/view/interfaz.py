@@ -174,6 +174,12 @@ class Interfaz():
     def menu_notas(self,ventana,id_usuario,nombre,apellidos):
         self.borrarPantalla(ventana)
 
+        #datos globales
+        global usuarioid, nombres, apellido
+        usuarioid=id_usuario
+        nombres=nombre
+        apellido=apellidos
+
         #Titulo
         lbl_titulo=tk.Label(ventana, text=f".:: bienvenido {nombre} {apellidos}, has iniciado sesión::.")
         lbl_titulo.pack(pady=[15,25])
@@ -247,7 +253,7 @@ class Interfaz():
         txt_texto.pack(pady=[10, 20])
 
         #Botones
-        btn_crear=tk.Button(ventana, text="Guardar", command=lambda:validar_nota(id_usuario, titulo.get(), texto.get()))
+        btn_crear=tk.Button(ventana, text="Guardar", command=lambda:validar_nota(titulo.get(), texto.get()))
         btn_crear.config(
             width=16
         )
