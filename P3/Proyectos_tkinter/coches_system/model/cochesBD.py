@@ -19,18 +19,6 @@ class Autos:
           return True
         except:
           return False
-        
-    # @staticmethod
-    # def insertar(marca,color,modelo,velocidad,caballaje,plazas):
-    #     try:
-    #       cursor.execute(
-    #         "insert into autos values(null,%s,%s,%s,%s,%s, %s)",
-    #         (marca,color,modelo,velocidad,caballaje,plazas)
-    #       )
-    #       conexion.commit()
-    #       return True
-    #     except:
-    #       return False
        
     @staticmethod
     def consultar():
