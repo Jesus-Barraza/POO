@@ -288,10 +288,10 @@ class Interfaz():
                 lbl_1=tk.Label(marco_texto, text=f"ID: {fila[0]}")
                 lbl_1.grid(row=0, column=0, pady=5, padx=10)
 
-                lbl_2=tk.Label(marco_texto, text=f"Titulo: {fila[1]}")
+                lbl_2=tk.Label(marco_texto, text=f"Titulo: {fila[2]}")
                 lbl_2.grid(row=0, column=1, pady=5, padx=10)
 
-                lbl_3=tk.Label(marco_texto, text=f"Fecha: {fila[2]}")
+                lbl_3=tk.Label(marco_texto, text=f"Fecha: {fila[4]}")
                 lbl_3.grid(row=0, column=2, pady=5, padx=10)
 
                 lbl_4=tk.Label(ventana, text=f"{fila[3]}")

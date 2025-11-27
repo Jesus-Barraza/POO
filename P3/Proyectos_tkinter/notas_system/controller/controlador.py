@@ -1,6 +1,7 @@
 from model.operaciones import Sesion, Notas
 import hashlib
 from tkinter import messagebox
+from view.interfaz import *
 
 class Usuarios():
     @staticmethod
@@ -32,9 +33,9 @@ class OpeNotas():
     @staticmethod
     def alerta(notificacion):
         if notificacion:
-            noti=messagebox.showinfo(title="Registro de notas", message="La operación se realizó con éxito")
+            noti=messagebox.showinfo(title="Registro de notas", message=f"La operación se realizó con éxito")
         else:
-            noti=messagebox.showerror(title="Registro de notas", message="Se ha producido un error, inténtelo más tarde")
+            noti=messagebox.showerror(title="Registro de notas", message=f"Se ha producido un error, inténtelo más tarde")
 
 
     @staticmethod
