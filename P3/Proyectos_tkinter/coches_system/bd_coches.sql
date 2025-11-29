@@ -21,9 +21,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `bd_coches`
 --
 
-CREATE DATABASE `bd_coches`
-USE `bd_coches`
-
 -- --------------------------------------------------------
 
 --
