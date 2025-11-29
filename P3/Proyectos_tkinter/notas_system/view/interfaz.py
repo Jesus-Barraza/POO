@@ -295,6 +295,7 @@ class Interfaz():
                 lbl_3.grid(row=0, column=2, pady=5, padx=10)
 
                 lbl_4=tk.Label(ventana, text=f"{fila[3]}")
+                lbl_4.config(bd=10)
                 lbl_4.pack(pady=[5,20])
         else:
             lbl_noti=tk.Label(ventana, text="No hay notas registrada por el momento")
