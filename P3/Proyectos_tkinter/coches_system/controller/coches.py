@@ -130,3 +130,54 @@ class Camionetas(Coches):
    def cerrada(self,cerrada):
       self.__cerrada=cerrada
    
+class funciones():
+   def datos_autos(self,tipo):
+      self.borrarPantalla()
+      print(f"\n\t ...Ingresa los siguientes datos del vehículo de tipo: '{tipo}' ...")
+      marca=input("Marca: ").upper()
+      color=input("Color: ").upper()
+      modelo=input("Modelo: ").upper()
+      velocidad=int(input("Velocidad: "))
+      potencia=int(input("Potencia: "))
+      plazas=int(input("Plazas: "))
+      return marca,color,modelo,velocidad,potencia,plazas
+
+   def imprimir_datos_vehiculo(self,marca,color,modelo,velocidad,potencia,plazas):
+      print(f"\n\tDatos del Vehiculo: \n Marca:{marca} \n Color: {color} \n Modelo: {modelo} \n Velocidad: {velocidad} \n Caballaje: {potencia} \n Plazas: {plazas}")
+
+   def respuesta_sql(self,respuesta):
+      if respuesta:
+            print("\n\t... ¡ Accion realizada con Éxito !...")
+      else:
+            print("\n\t... ¡ No fue posible realizar la acción, vuelva a intentar por favor ! ...") 
+
+   def autos(self):
+      marca,color,modelo,velocidad,potencia,plazas=self.datos_autos("Auto")
+      coche=coches.Coches(marca,color,modelo,velocidad,potencia,plazas)
+      self.borrarPantalla()
+      self.imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
+      return coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas
+      
+   def camionetas(self):
+      marca,color,modelo,velocidad,potencia,plazas=self.datos_autos("Camioneta")
+      traccion=input("Traccion: ").upper().strip()
+      cerrada=input("Cerrada (SI/NO): ").upper().strip()
+      if cerrada=="SI":
+            cerrada=True
+      else:
+            cerrada=False    
+      coche=coches.Camionetas(marca,color,modelo,velocidad,potencia,plazas,traccion,cerrada)
+      self.borrarPantalla()
+      self.imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
+      print(f" Traccion: {coche.traccion}\n Cerrada: {coche.cerrada}")
+      return coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas,coche.traccion,coche.cerrada 
+
+   def camiones(self):
+      marca,color,modelo,velocidad,potencia,plazas=self.datos_autos("Camión")
+      eje=int(input("No.de ejes: "))
+      capacidadCarga=int(input("Capacidad de carga: "))
+      coche=coches.Camiones(marca,color,modelo,velocidad,potencia,plazas,eje,capacidadCarga)
+      self.borrarPantalla()
+      self.imprimir_datos_vehiculo(coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas)
+      print(f"#Ejes: {coche.eje}\n Capacidad de carga: {coche.capacidadCarga}")
+      return coche.marca,coche.color,coche.modelo,coche.velocidad,coche.caballaje,coche.plazas,coche.eje,coche.capacidadCarga

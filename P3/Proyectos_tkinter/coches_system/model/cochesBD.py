@@ -1,4 +1,4 @@
-from conexionBD import *
+from model.conexionBD import *
 
 class Autos:
     def __init__(self,marca,color,modelo,velocidad,caballaje,plazas):
