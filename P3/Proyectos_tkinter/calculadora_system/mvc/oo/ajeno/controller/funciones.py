@@ -54,12 +54,16 @@ class mensajes():
     def eliminarDato(id):
         if result:
             if id:
-                aviso=messagebox.askquestion(title="CUIDADO!", icon="warning", message=f"\n ¿Desea borrar la operación {id}?")
-                if aviso=="yes":
-                    operaciones.Operaciones.eliminar(id)
-                    mensajes.respuesta_sql(True)
+                dato=operaciones.Operaciones.buscar(id)
+                if len(dato)>0:
+                    aviso=messagebox.askquestion(title="CUIDADO!", icon="warning", message=f"\n ¿Desea borrar la operación {id}?")
+                    if aviso=="yes":
+                        operaciones.Operaciones.eliminar(id)
+                        mensajes.respuesta_sql(True)
+                    else:
+                        mensajes.respuesta_sql(False)
                 else:
-                    mensajes.respuesta_sql(False)
+                    nada=messagebox.showwarning(title="No existe esta ID", message="No existe esta ID")
             else:
                 sinid=messagebox.showwarning(title="No introdujo una ID", message="No hay una ID válida para cambiar")
         else:
@@ -71,8 +75,12 @@ class mensajes():
         if ope:
             if result:
                 if id:
-                    operaciones.Operaciones.actualizar(id, n1, n2, sim, ope[3])
-                    mensajes.respuesta_sql(True)
+                    dato=operaciones.Operaciones.buscar(id)
+                    if len(dato)>0:
+                        operaciones.Operaciones.actualizar(id, n1, n2, sim, ope[3])
+                        mensajes.respuesta_sql(True)
+                    else:
+                        nada=messagebox.showwarning(title="No existe esta ID", message="No existe esta ID")
                 else:
                     sinid=messagebox.showwarning(title="No introdujo una ID", message="No hay una ID válida para cambiar")
             else:

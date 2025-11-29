@@ -55,3 +55,19 @@ class Operaciones():
         except:    
           return False
         
+    @staticmethod
+    def buscar(id):
+      try:
+        conexionDB.cursor.execute(
+            "Select * from operaciones where id=%s",
+            (id, )
+        )
+        busqueda=conexionDB.cursor.fetchone()
+        if busqueda is not None:
+          return busqueda
+        else:
+           return ""
+      except:
+        return ""
+          
+        

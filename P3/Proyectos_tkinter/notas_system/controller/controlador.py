@@ -20,7 +20,7 @@ class Usuarios():
             return None
 
     @staticmethod
-    def registrar(ventana, nombre, apellido, correo, contra):
+    def registrar(nombre, apellido, correo, contra):
         contra=Usuarios.codigo(contra)
         regi=Sesion.registrar(nombre, apellido, correo, contra)
         if regi:

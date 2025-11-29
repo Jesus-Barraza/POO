@@ -167,7 +167,7 @@ class Interfaz():
         frame_btn.pack(pady=5)
 
         #botones
-        btn_eliminar=tk.Button(frame_btn, text="Eliminar", command=lambda:funciones.insert.eliminarDato(ide.get()))
+        btn_eliminar=tk.Button(frame_btn, text="Eliminar", command=lambda:funciones.mensajes.eliminarDato(ide.get()))
         btn_eliminar.config(
             width=10
         )
