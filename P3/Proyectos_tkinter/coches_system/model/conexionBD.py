@@ -1,4 +1,5 @@
 import mysql.connector
+from tkinter import messagebox
 
 try:
     #Conectar con la BD en MySQL
@@ -10,5 +11,5 @@ try:
     )
     #Crear un objeto de tipo cursor que se pueda reutilizar nuevamente
     cursor=conexion.cursor(buffered=True)
-except:
-     print(f"Ocurrio un error con el Sistema por favor verifique ...")    
+except error as e:
+    respuestasql=messagebox.showerror(title="Status SQL", message=f"Ocurrió un error {e}, inténtelo más tarde")
