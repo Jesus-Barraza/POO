@@ -1,5 +1,4 @@
 import os
-os.system("clear")
 from model import cochesBD
 from tkinter import messagebox
 
@@ -152,6 +151,33 @@ class funciones():
       if resp:
          funciones.respuesta_sql(resp)
          return resp
+   
+   @staticmethod
+   def buscar_vehiculo(ide, tipo):
+      if ide:
+         resp=cochesBD.Base_datos.buscar(ide, tipo)
+         if resp:
+            funciones.respuesta_sql(resp)
+            return True
+         else:
+            funciones.respuesta_sql(resp)
+            return False
+      else:
+          nada=messagebox.showwarning(title="Status", message="Introduzca una ID")
+   
+   @staticmethod
+   def actualizar_vehiculo(tipo,nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2,ide):
+      if ide:
+         if tipo=="autos":
+            resp=cochesBD.Autos.actualizar(nombre,color,modelo,velocidad,potencia,plaza,ide)
+         elif tipo=="camionetas":
+            resp=cochesBD.Camionetas.actualizar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2,ide)
+         elif tipo=="camiones":
+            resp=cochesBD.Camiones.actualizar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2,ide)
+
+         if resp:
+            funciones.respuesta_sql(resp)
+            return resp
 
    def imprimir_datos_vehiculo(self,marca,color,modelo,velocidad,potencia,plazas):
       print(f"\n\tDatos del Vehiculo: \n Marca:{marca} \n Color: {color} \n Modelo: {modelo} \n Velocidad: {velocidad} \n Caballaje: {potencia} \n Plazas: {plazas}")

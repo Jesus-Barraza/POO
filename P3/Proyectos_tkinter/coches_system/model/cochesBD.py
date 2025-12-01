@@ -1,6 +1,6 @@
 from model.conexionBD import *
 
-class Autos:
+class Autos():
   @staticmethod
   def insertar(marca, color, modelo, velocidad, caballaje, plazas):
     try:
@@ -12,16 +12,6 @@ class Autos:
       return True
     except:
       return False
-       
-  @staticmethod
-  def consultar():
-      try:
-        cursor.execute(
-          "select * from autos"
-        )
-        return cursor.fetchall()
-      except:    
-        return []
 
   @staticmethod
   def actualizar(marca, color, modelo,velocidad,caballaje,plazas,id):
@@ -59,16 +49,6 @@ class Camiones(Autos):
         return True
       except:
         return False
-  
-  @staticmethod
-  def consultar():
-      try:
-        cursor.execute(
-          "select * from camiones"
-        )
-        return cursor.fetchall()
-      except:    
-        return []
 
   @staticmethod
   def actualizar(marca,color,modelo,velocidad,caballaje,plazas,eje,capacidadCarga,id):
@@ -106,16 +86,6 @@ class Camionetas(Autos):
         return True
       except:
         return False
-  
-  @staticmethod
-  def consultar():
-      try:
-        cursor.execute(
-          "select * from camionetas"
-        )
-        return cursor.fetchall()
-      except:    
-        return []
 
   @staticmethod
   def actualizar(marca,color,modelo,velocidad,caballaje,plazas,traccion,cerrada,id):
@@ -142,4 +112,23 @@ class Camionetas(Autos):
         return False  
 
 class Base_datos():
-  pass
+  @staticmethod
+  def buscar(ide, tipo):
+    try:
+      cursor.execute(
+        f"select * from {tipo} where id = %s",
+        (ide, )
+      )
+      return cursor.fetchone()
+    except:
+      return []
+    
+  @staticmethod
+  def consultar(tipo):
+    try:
+      cursor.execute(
+        f"select * from {tipo}"
+      )
+      return cursor.fetchall()
+    except:    
+      return []

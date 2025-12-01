@@ -15,6 +15,21 @@ class Menu:
         for widget in ventana.winfo_children():
             widget.destroy()
 
+    @staticmethod
+    def limit_float(p):
+        allowed = "0123456789."
+        if all(ch in allowed for ch in p) and p.count(".") <= 1:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def limit_int(p):
+        if p.isdigit():
+            return True
+        else:
+            return False
+
     def main(self, ventana):
         #Borrar pantalla
         self.borrarPantalla(ventana)
@@ -62,7 +77,7 @@ class Menu:
         btn_consult.config(width=12)
         btn_consult.pack(pady=10)
 
-        btn_actual=tk.Button(ventana, text="Actualizar", command=lambda:self.menu_camiones(ventana))
+        btn_actual=tk.Button(ventana, text="Actualizar", command=lambda:self.menu_actualizar(ventana, tipo))
         btn_actual.config(width=12)
         btn_actual.pack(pady=[10,15])
 
@@ -88,8 +103,10 @@ class Menu:
         potencia=tk.IntVar()
         plazas=tk.IntVar()
         if tipo=="autos":
-            extra1="0"
-            extra2="0"
+            extra1=tk.StringVar()
+            extra1.set("0")
+            extra2=tk.StringVar()
+            extra2.set("0")
         elif tipo=="camionetas":
             extra1=tk.StringVar()
             tracciones=["delantera","trasera","dual"]
@@ -99,22 +116,9 @@ class Menu:
             extra1=tk.IntVar()
             extra2=tk.IntVar()
 
-        #limitar las cajas de texto
-        def limit_float(p):
-            allowed = "0123456789."
-            if all(ch in allowed for ch in p) and p.count(".") <= 1:
-                return True
-            else:
-                return False
-
-        def limit_int(p):
-            if p.isdigit():
-                return True
-            else:
-                return False
-
-        verificacion_entero=(ventana.register(limit_int), "%P")    
-        verificacion_real=(ventana.register(limit_float), "%P")
+        #Limitar las variables
+        verificacion_entero=(ventana.register(self.limit_int), "%P")    
+        verificacion_real=(ventana.register(self.limit_float), "%P")
 
         #Funciones
         def agregar(tipo,nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2):
@@ -215,13 +219,8 @@ class Menu:
         lbl_titulo=tk.Label(ventana, text=f"... Mostrar los vehículos de tipo {tipo} ...")
         lbl_titulo.pack(pady=[15, 25])
 
-        #Texto
-        if tipo=="autos":
-            registros=cochesBD.Autos.consultar()
-        elif tipo=="camionetas":
-            registros=cochesBD.Camionetas.consultar()
-        elif tipo=="camiones":
-            registros=cochesBD.Camiones.consultar()
+        #Textos
+        registros=cochesBD.Base_datos.consultar(tipo)
         if len(registros)>0:
             num_vehiculo=1
 
@@ -301,3 +300,154 @@ class Menu:
             width=12
         )
         btn_volver.pack(pady=10)
+
+    def menu_actualizar(self, ventana, tipo):
+        #Borrar pantalla
+        self.borrarPantalla(ventana)
+
+        #variable
+        ide=tk.IntVar()
+
+        #limitar variables
+        verificacion_entero=(ventana.register(self.limit_int), "%P")    
+        verificacion_real=(ventana.register(self.limit_float), "%P")
+
+        #funciones
+        def buscar(ide, tipo):
+            dato=coches.funciones.buscar_vehiculo(ide, tipo)
+            if dato:
+                #variables
+                marca=tk.StringVar()
+                color=tk.StringVar()
+                colores=["azul","negro","rojo","verde","amarillo","blanco","gris","celeste","naranja"]
+                color.set(colores[0])
+                modelo=tk.StringVar()
+                velocidad=tk.StringVar()
+                potencia=tk.IntVar()
+                plazas=tk.IntVar()
+                if tipo=="autos":
+                    extra1=tk.StringVar()
+                    extra1.set("0")
+                    extra2=tk.StringVar()
+                    extra2.set("0")
+                elif tipo=="camionetas":
+                    extra1=tk.StringVar()
+                    tracciones=["delantera","trasera","dual"]
+                    extra1.set(tracciones[0])
+                    extra2=tk.BooleanVar()
+                elif tipo=="camiones":
+                    extra1=tk.IntVar()
+                    extra2=tk.IntVar()
+
+                #marca del vehículo
+                lbl_marca=tk.Label(ventana, text="Marca: ", justify="left")
+                lbl_marca.pack(pady=5)
+
+                txt_marca=tk.Entry(ventana, textvariable=marca)
+                txt_marca.pack(pady=[0,15])
+
+                #color del vehículo
+                lbl_color=tk.Label(ventana, text="Color: ", justify="left")
+                lbl_color.pack(pady=5)
+
+                opt_color=tk.OptionMenu(ventana, color, *colores)
+                opt_color.pack(pady=[0,15])
+
+                #modelo del vehículo
+                lbl_modelo=tk.Label(ventana, text="Modelo: ", justify="left")
+                lbl_modelo.pack(pady=5)
+
+                txt_modelo=tk.Entry(ventana, textvariable=modelo)
+                txt_modelo.pack(pady=[0,15])
+
+                #velocidad del vehículo
+                lbl_vel=tk.Label(ventana, text="Velocidad: ", justify="left")
+                lbl_vel.pack(pady=5)
+
+                txt_vel=tk.Entry(ventana, textvariable=velocidad, validate="key", validatecommand=verificacion_real)
+                txt_vel.pack(pady=[0,15])
+        
+                #potencia del vehículo
+                lbl_poten=tk.Label(ventana, text="Potencia: ", justify="left")
+                lbl_poten.pack(pady=5)
+
+                txt_poten=tk.Entry(ventana, textvariable=potencia, validate="key", validatecommand=verificacion_entero)
+                txt_poten.pack(pady=[0,15])
+
+                #plazas del vehículo
+                lbl_plaza=tk.Label(ventana, text="Plazas: ", justify="left")
+                lbl_plaza.pack(pady=5)
+
+                txt_plaza=tk.Entry(ventana, textvariable=plazas, validate="key", validatecommand=verificacion_entero)
+                txt_plaza.pack(pady=[0,15])
+
+                if tipo=="camionetas":
+                    #traccion de la camioneta
+                    lbl_extra1=tk.Label(ventana, text="Traccion: ", justify="left")
+                    lbl_extra1.pack(pady=5)
+
+                    opt_extra1=tk.OptionMenu(ventana, extra1, *tracciones)
+                    opt_extra1.pack(pady=[0,15])
+
+                    #estatus de la camioneta
+                    chk_extra2=tk.Checkbutton(ventana, text="¿Se encuentra cerrada?", variable=extra2, onvalue=True, offvalue=False)
+                    chk_extra2.pack(pady=[5,15])
+                elif tipo=="camiones":
+                    #ejes del camion
+                    lbl_eje=tk.Label(ventana, text="Ejes: ", justify="left")
+                    lbl_eje.pack(pady=5)
+
+                    txt_eje=tk.Entry(ventana, textvariable=extra1, validate="key", validatecommand=verificacion_entero)
+                    txt_eje.pack(pady=[0,15])
+
+                    #capacidad de carga del camion
+                    lbl_eje=tk.Label(ventana, text="Capacidad de carga: ", justify="left")
+                    lbl_eje.pack(pady=5)
+
+                    txt_eje=tk.Entry(ventana, textvariable=extra2, validate="key", validatecommand=verificacion_entero)
+                    txt_eje.pack(pady=[0,15])
+
+                #botones
+                marco_botones2=tk.Frame(ventana, width=200, height=30)
+                marco_botones2.pack()
+
+                btn_entrar=tk.Button(marco_botones2, text="Actualizar", command=lambda:actualizar(tipo, marca.get(), color.get(), modelo.get(), velocidad.get(), potencia.get(), plazas.get(), extra1.get(), extra2.get(), ide))
+                btn_entrar.config(
+                width=12
+                )
+                btn_entrar.grid(row=0, column=0, pady=10, padx=20)
+
+                btn_volver=tk.Button(marco_botones2, text="Volver", command=lambda:self.menu_acciones(ventana, tipo))
+                btn_volver.config(
+                    width=12
+                )
+                btn_volver.grid(row=0, column=1, pady=10, padx=20)
+            else:
+                self.menu_actualizar(ventana, tipo)
+        
+        #Funciones
+        def actualizar(tipo,nombre,color,modelo,velocidad,potencia,plaza,ide,extra1,extra2,):
+            dato=coches.funciones.actualizar_vehiculo(tipo,nombre,color,modelo,velocidad,potencia,plaza,ide,extra1,extra2)
+            if dato:
+                self.menu_acciones(ventana, tipo)
+
+        #Titulo
+        lbl_titulo=tk.Label(ventana, text=f"... Actualizar un vehículo de tipo {tipo} ...")
+        lbl_titulo.pack(pady=[15,25])
+
+        #busqueda
+        lbl_id=tk.Label(ventana, text="Introduzca la ID a cambiar: ")
+        lbl_id.pack(pady=5)
+
+        txt_id=tk.Entry(ventana, textvariable=ide, validate="key", validatecommand=verificacion_real)
+        txt_id.pack(pady=[5, 10])
+
+        #botones
+        marco_botones=tk.Frame(ventana, width=100, height=30)
+        marco_botones.pack()
+
+        btn_buscar=tk.Button(marco_botones, text="Buscar", width=12, command=lambda:buscar(ide.get(), tipo))
+        btn_buscar.grid(row=0, column=0, pady=10, padx=20)
+
+        btn_volver=tk.Button(marco_botones, text="Volver", command=lambda:self.menu_acciones(ventana, tipo), width=12)
+        btn_volver.grid(row=0, column=1, pady=10, padx=20)
