@@ -58,7 +58,7 @@ class Menu:
         btn_insert.config(width=12)
         btn_insert.pack(pady=10)
 
-        btn_consult=tk.Button(ventana, text="Consultar", command=lambda:self.menu_camionetas(ventana))
+        btn_consult=tk.Button(ventana, text="Consultar", command=lambda:self.menu_mostrar(ventana, tipo))
         btn_consult.config(width=12)
         btn_consult.pack(pady=10)
 
@@ -123,7 +123,7 @@ class Menu:
                 self.menu_acciones(ventana, tipo)
 
         #Título
-        lbl_titulo=tk.Label(ventana, text=f"Ingresa los siguientes datos del vehículo de tipo {tipo}")
+        lbl_titulo=tk.Label(ventana, text=f"... Ingresa los siguientes datos del vehículo de tipo {tipo} ...")
         lbl_titulo.pack(pady=[15,25])
 
         #marca del vehículo
@@ -201,6 +201,101 @@ class Menu:
         )
         btn_entrar.pack(pady=10)
 
+        btn_volver=tk.Button(ventana, text="Volver", command=lambda:self.menu_acciones(ventana, tipo))
+        btn_volver.config(
+            width=12
+        )
+        btn_volver.pack(pady=10)
+
+    def menu_mostrar(self, ventana, tipo):
+        #Borrar pantalla
+        self.borrarPantalla(ventana)
+
+        #titulo
+        lbl_titulo=tk.Label(ventana, text=f"... Mostrar los vehículos de tipo {tipo} ...")
+        lbl_titulo.pack(pady=[15, 25])
+
+        #Texto
+        if tipo=="autos":
+            registros=cochesBD.Autos.consultar()
+        elif tipo=="camionetas":
+            registros=cochesBD.Camionetas.consultar()
+        elif tipo=="camiones":
+            registros=cochesBD.Camiones.consultar()
+        if len(registros)>0:
+            num_vehiculo=1
+
+            #Matriz
+            marco_texto=tk.Frame(ventana)
+            marco_texto.config(
+            width=600,
+            height=800
+            )
+            marco_texto.pack()
+
+            #Columnas de tabla
+            lbl_title1=tk.Label(marco_texto, text="marca")
+            lbl_title1.grid(row=0, column=0, pady=10, padx=5)
+
+            lbl_title2=tk.Label(marco_texto, text="color")
+            lbl_title2.grid(row=0, column=1, pady=10, padx=5)
+
+            lbl_title3=tk.Label(marco_texto, text="modelo")
+            lbl_title3.grid(row=0, column=2, pady=10, padx=5)
+
+            lbl_title4=tk.Label(marco_texto, text="velocidad")
+            lbl_title4.grid(row=0, column=3, pady=10, padx=5)
+
+            lbl_title5=tk.Label(marco_texto, text="potencia")
+            lbl_title5.grid(row=0, column=4, pady=10, padx=5)
+
+            lbl_title6=tk.Label(marco_texto, text="plazas")
+            lbl_title6.grid(row=0, column=5, pady=10, padx=5)
+            if tipo=="camiones":
+                lbl_title7=tk.Label(marco_texto, text="ejes")
+                lbl_title7.grid(row=0, column=6, pady=10, padx=5)
+
+                lbl_title8=tk.Label(marco_texto, text="capacidad de carga")
+                lbl_title8.grid(row=0, column=7, pady=10, padx=5)
+            elif tipo=="camionetas":
+                lbl_title7=tk.Label(marco_texto, text="traccion")
+                lbl_title7.grid(row=0, column=6, pady=10, padx=5)
+
+                lbl_title8=tk.Label(marco_texto, text="cerrado")
+                lbl_title8.grid(row=0, column=7, pady=10, padx=5)
+             
+            for fila in registros:
+                #Textos
+                lbl_1=tk.Label(marco_texto, text=f"{fila[1]}")
+                lbl_1.grid(row=num_vehiculo, column=0, pady=5, padx=5)
+
+                lbl_2=tk.Label(marco_texto, text=f"{fila[2]}")
+                lbl_2.grid(row=num_vehiculo, column=1, pady=5, padx=5)
+
+                lbl_3=tk.Label(marco_texto, text=f"{fila[3]}")
+                lbl_3.grid(row=num_vehiculo, column=2, pady=5, padx=5)
+
+                lbl_4=tk.Label(marco_texto, text=f"{fila[4]}")
+                lbl_4.grid(row=num_vehiculo, column=3, padx=5, pady=5)
+
+                lbl_5=tk.Label(marco_texto, text=f"{fila[5]}")
+                lbl_5.grid(row=num_vehiculo, column=4, padx=5, pady=5)
+
+                lbl_6=tk.Label(marco_texto, text=f"{fila[6]}")
+                lbl_6.grid(row=num_vehiculo, column=5, padx=5, pady=5)
+
+                if tipo=="camiones" or tipo=="camionetas":
+                    lbl_7=tk.Label(marco_texto, text=f"{fila[7]}")
+                    lbl_7.grid(row=num_vehiculo, column=6, padx=5, pady=5)
+
+                    lbl_8=tk.Label(marco_texto, text=f"{fila[8]}")
+                    lbl_8.grid(row=num_vehiculo, column=7, padx=5, pady=5)
+                num_vehiculo+=1
+        else:
+            lbl_noti=tk.Label(ventana, text=f"No hay vehículos de {tipo} por el momento")
+            lbl_noti.pack(pady=10)
+
+        #botones
         btn_volver=tk.Button(ventana, text="Volver", command=lambda:self.menu_acciones(ventana, tipo))
         btn_volver.config(
             width=12
