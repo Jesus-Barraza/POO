@@ -148,8 +148,8 @@ class funciones():
          resp=cochesBD.Camionetas.insertar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2)
       elif tipo=="camiones":
          resp=cochesBD.Camiones.insertar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2)
+      funciones.respuesta_sql(resp)
       if resp:
-         funciones.respuesta_sql(resp)
          return resp
    
    @staticmethod
@@ -174,10 +174,31 @@ class funciones():
             resp=cochesBD.Camionetas.actualizar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2,ide)
          elif tipo=="camiones":
             resp=cochesBD.Camiones.actualizar(nombre,color,modelo,velocidad,potencia,plaza,extra1,extra2,ide)
-
+         funciones.respuesta_sql(resp)
          if resp:
-            funciones.respuesta_sql(resp)
             return resp
+      else:
+          romper=messagebox.showwarning(title="No hay ID", message="No se introdujo una ID")
+   
+   @staticmethod
+   def eliminar_vehiculo(tipo, ide):
+      if ide:
+         cuidao=messagebox.askyesno(title="Eliminar un vehículo", message="¡Cuidado! ¿Deseas eliminar el vehículo?")
+         if cuidao==True:
+            if tipo=="autos":
+               resp=cochesBD.Autos.eliminar(ide)
+            elif tipo=="camionetas":
+               resp=cochesBD.Camionetas.eliminar(ide)
+            elif tipo=="camiones":
+               resp==cochesBD.Camiones.eliminar(ide)
+            funciones.respuesta_sql(resp)
+            if resp:
+               return resp
+         else:
+             cancelar=messagebox.showinfo(title="Eliminar vehículo", message="Se ha cancelado la operación con éxito")
+      else:
+         romper=messagebox.showwarning(title="No hay ID", message="No se introdujo una ID")
+
 
    def imprimir_datos_vehiculo(self,marca,color,modelo,velocidad,potencia,plazas):
       print(f"\n\tDatos del Vehiculo: \n Marca:{marca} \n Color: {color} \n Modelo: {modelo} \n Velocidad: {velocidad} \n Caballaje: {potencia} \n Plazas: {plazas}")
