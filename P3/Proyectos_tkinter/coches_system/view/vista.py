@@ -6,6 +6,7 @@ from tkinter import messagebox
 
 class Menu:
     def __init__(self, ventana):
+        ventana.title("Gestión de vehículos")
         ventana.geometry("1000x750")
         ventana.resizable(False, False)
         self.main(ventana)
