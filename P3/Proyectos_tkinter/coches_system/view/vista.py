@@ -118,7 +118,7 @@ class Menu:
             extra2=tk.IntVar()
 
         #Limitar las variables
-        verificacion_entero=(ventana.register(self.limit_int), "%P")    
+        verificacion_entero=(ventana.register(self.limit_int), "%P")
         verificacion_real=(ventana.register(self.limit_float), "%P")
 
         #Funciones
